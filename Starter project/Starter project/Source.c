@@ -46,7 +46,7 @@ if (input >= '0'&&input <= '4') {
 
 					break;
 				case '4':
-					calendar();
+					calendar(counter);
 					break;
 				case '5':
 					exit(0);
