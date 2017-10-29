@@ -7,11 +7,16 @@ struct dates {
 	int month;
 	int year;
 };
-void lenght();
-void position();
-void calendar();
-void NumberLenght();
+void lenght(char a, int counter, char string[MAX_LENGHT]);
+void position(char string[MAX_LENGHT], int counter, int a);
+void calendar(int counter);
+void NumberLenght(int a, int counter, char string[MAX_LENGHT]);
 int main() {
+	int counter=0;
+	char string[MAX_LENGHT];
+	char x = '-';
+	int a=0;
+
 	int input = 0;
 	
 		do {
@@ -30,14 +35,14 @@ if (input >= '0'&&input <= '4') {
 				switch (input) {
 					
 				case '1':
-					position();
+					position(string, counter,   a);
 
 					break;
 				case '2':
-					lenght();
+					lenght(a, counter, string);
 					break;
 				case '3':
-					NumberLenght();
+					NumberLenght(a, counter, string);
 
 					break;
 				case '4':
@@ -54,9 +59,9 @@ else { break; }
 	system("pause");
 	return 0;
 }
-void calendar() {
+void calendar(int  counter) {
 	struct dates taker;
-	int  i = 0;
+	counter = 0;
 	do {
 		printf("Validation: D/M/Y:\n");
 		scanf("%d/%d/%d", &taker.date, &taker.month, &taker.year);
@@ -65,138 +70,188 @@ void calendar() {
 				if (taker.year >= 0 && taker.year <= 100000) {
 					if (taker.month >= 1 && taker.month <= 12) {
 						if ((taker.date >= 1 && taker.date <= 31) && (taker.month == 1 || taker.month == 3 || taker.month == 5 || taker.month == 7 || taker.month == 8 || taker.month == 10 || taker.month == 12)) {
-							i++;
+							counter++;
 						}
 						if ((taker.date >= 1 && taker.date <= 30) && (taker.month == 4 || taker.month == 6 || taker.month == 9 || taker.month == 11)) {
-							i++;
+							counter++;
 						}
 						if ((taker.date >= 1 && taker.date <= 28) && (taker.month == 2)) {
-							i++;
+							counter++;
 						}
 						if (taker.date == 29 && taker.month == 2 && (taker.year % 400 == 0 || (taker.year % 4 == 0 && taker.year % 100 != 0))) {
-							i++;
+							counter++;
 						}
-						if (i > 0) {
-							printf("The date exists!\n"); break;
+						if (counter> 0) {
+							printf("The date exists!\n"); 
 						}
-						else { printf("Date doesn't exist!\n"); break; }
+						else {
+							printf("Date doesn't exist!\n");  
+						}
 
 					}
-					else { printf("Unexisting month!\n"); break; }
+					else { printf("Unexisting month!\n");  
+					}
 
 				}
 				else {
-					printf("Unexisting year!\n"); break;
+					printf("Unexisting year!\n");
 				}
 			}
 			else {
-				printf("No date inserted!\n"); break;
+				printf("No date inserted!\n"); 
 			}
 		}
 		else {
-			printf("No month inserted!\n"); break;
+			printf("No month inserted!\n"); 
 		}
 
-	} while (i != 1);
+	} while (counter != 1);
 }
-void position() {
-	char string[MAX_LENGHT];
-	int a;
-	int counter = 0;
+void position(char string[MAX_LENGHT],int counter,int a) {
+	
 	int getch();
-	char x = '-';
+	int putch();
+   counter = 0;
+   char x = '-';
+	
 	printf("First symbol starts with Cappital letter and second symbol must be Number\n");
 	printf("Example: [X2-X2-X2-X2-X2-X2] \n");
 	printf("Insert MAC address: \n");
 	printf("-->");
-	do {
+	do{
 		a = getch();
 
-		string[counter] = a;
-		counter++;
-		string[counter] = '\0';
-		printf("%c", string[counter - 1]);
+		if (counter <12) {
+			if (((a >= 'A'&&a <= 'Z') && (counter % 2 == 0)) || ((a >= 47 && a <= 58) && (counter % 2 == 1))) {
 
-		if (((a >= 'A'&&a <= 'Z') && (counter == 1 || counter == 3 || counter == 5 || counter == 7 || counter == 9 || counter == 11)) || ((a >= 47 && a <= 58) && (counter == 2 || counter == 4 || counter == 6 || counter == 8 || counter == 10 || counter == 12))) {
+				string[counter] = a;
+				counter++;
+				string[counter] = '\0';
+				putch(a);
+		
+		
+			}
+			 if (a==8) {
+				 counter--;
+				 if (counter < 0)
+					 counter++;
+				 else
+					 printf("\b \b");
 
+			}
+
+		}
+		else {
+			if (a == 8) {
+				counter--;
+				if (counter < 0)
+					counter++;
+				else
+					printf("\b \b");
+
+			}
 
 		}
 
-		else { printf("\nYou can only insert Uppercase letters and numbers!\n"); break; }
-
-		if (counter == 2 || counter == 4 || counter == 6 || counter == 8 || counter == 10) {
-			printf("%c", x);
-		}
 
 
+	} while (a != '\r');
 
-
-	} while (counter < 12);
-
-	printf("\n");
+	
+	printf("\nAdress:%s\n",string);
 }
-void lenght() {
-	char a;
-	int counter = 0;
-	char string[MAX_LENGHT];
-start:
+void lenght(char a, int counter , char string[MAX_LENGHT]) {
+	counter = 0;
+	int getch();
+	int putch();
 	printf("|-------------------------------|\n");
 	printf("|Password lenght is 10 symbols. |\n");
 	printf("|[Enter password]               |\n");
-
 	printf("[>>:");
-	while ((a = _getche()) != '\r') {
-
-		printf("\b*");
-
+	do{
+		a = getch();
+		
+		if(counter<10){
 		if ((a >= 'a'&&a <= 'z') || (a >= 'A'&&a <= 'Z')) {
 
+
 			string[counter] = a;
+			
 			counter++;
 			string[counter] = '\0';
+			
+			putch(a);
+		}
 
+		if (a == 8) {
+			counter--;
+			if (counter < 0)
+				counter++;
+			else
+				printf("\b \b");
+
+		}
 		}
 		else {
-			printf("\nPassword contains only Lower and Upper case letters!!!\n");
-			goto start; 
-		}
+			if(a == 8) {
+				counter--;
+				if (counter < 0)
+					counter++;
+				else
+					printf("\b \b");
 
-		if (counter + 1>10)
-		{
-			printf("\nPassword is :(%s)\n", string);  break;
+			}
 		}
-	}
+		
+	} while (a != '\r');
+	printf("\nPassword:%s\n",string);
+	
 	system("pause");
 }
-void NumberLenght() {
+void NumberLenght(int a, int counter, char string[MAX_LENGHT]) {
 
-	int a = 0;
+	counter = 0;
 	int getch();
-	int counter = 0;
-	char string[MAX_LENGHT];
-	char x = '-';
+	int putch();
 	printf("Serial number contains 16 numeric code!\n");
 	printf("Insert Serial number:");
+
 	do {
 		a = getch();
-		if (a >= 48 && a <= 57) {
+		if (counter< 16) {
+			if (a >= 48 && a <= 57) {
 
-			string[counter] = a;
-			counter++;
-			string[counter] = '\0';
-			printf("%c", string[counter - 1]);
+				string[counter] = a;
+				counter++;
+				string[counter] = '\0';
+				putch(a);
+
+			}
+		
+			if (a == 8) {
+				counter--;
+				if (counter < 0)
+					counter++;
+				else
+					printf("\b \b");
+
+			}
+
 
 		}
 		else {
+			if (a == 8) {
+				counter--;
+				if (counter < 0)
+					counter++;
+				else
+					printf("\b \b");
 
-			printf("\nYou can only insert integer!\n");
-
-		}if(counter == 4 || counter == 8 || counter == 12 ){
-			printf("%c", x);
-		
+			}
 		}
-
-	} while (counter < 16);
-	printf("\n");
-	system("pause");
-}
+		
+		} while (a!='\r');
+	
+		printf("\nCode is:%s\n", string);
+		system("pause");
+	}
