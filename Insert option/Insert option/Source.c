@@ -12,38 +12,31 @@ int main()
 	char string[256]="";
 	int counter=0;
 	int get=0;
-	
 	int ch = 0;
-	
 	int len=0;
 
-	printf("Enter Numbers:");
+	printf("Enter Numbers:\n");
 	while (1) 
 	{
 		len = strlen(string);
 		get = _getch();
-		
-		if (counter < 10)
+		if (counter-ch < 10)
 		{
 			if ((get >= '0'&&get <= '9') &&(ch==0))
 			{
 				string[counter] = get;
 				counter++;
 				_putch(get);
-				
-
 			}
 			else
 			{
-				if (get >= '0'&&get <= '9')  
+				if (get >= '0'&&get <= '9')
 				{
-					string[counter - ch] = string[counter + ch];
 					string[counter - ch] = get;
 					_putch(string[counter - ch]);
+					counter++;
 				}
 			}
-
-
 			if ((get == BS) && (counter > 0))
 			{
 				_putch('\b');
@@ -51,7 +44,6 @@ int main()
 		     	_putch('\b');
 				string[counter] =' ';
 				counter--;
-				
 			}
 			if (get == '\r') 
 			{
@@ -60,27 +52,25 @@ int main()
 		}
 		else
 		{
-
 			break;
 		}
-			
-		if (get == L_Key)
+		if (counter != 0)
 		{
-			_putch('\b');
-			ch++;
-			
+			if (get == L_Key)
+			{
+				_putch('\b');
+				ch++;
+			}
+			if (get == R_Key)
+			{
+				_putch(string[counter - ch]);
+				ch--;
+			}
 		}
-		if (get == R_Key)
-		{
-			_putch(' ');
-			ch--;
-		}
-			
 		string[counter] = '\0';
 	}		
-	
 	printf("\nNumbers:%s Array lenght:%d\n", string, len);
 	
-	_getch();
+	getchar();
 	return 0;
 }
