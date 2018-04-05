@@ -3,6 +3,9 @@
 #include "string.h"
 #include "stdlib.h"
 #define SIZE 256
+#define BS 8
+#define L_Key 75
+#define R_Key 77
 int GetKey();
 
 int main()
@@ -24,7 +27,7 @@ int main()
 		{
 			break;
 		}
-		if ((ch == 8) && (pos > 0))
+		if ((ch == BS) && (pos > 0))
 		{
 			_putch('\b');
 			_putch(' ');
@@ -32,12 +35,12 @@ int main()
 			pos--;
 			string[pos] = '\0';
 		}
-		if (ch == 75 || ch == 224)
+		if (ch == L_Key || ch == 224)
 		{
 			_putch('\b');
 			pos--;
 		}
-		if (ch == 77||ch==224)
+		if (ch == R_Key ||ch==224)
 		{
 			_putch(string[pos]);
 			pos++;
