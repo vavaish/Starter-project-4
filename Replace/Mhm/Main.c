@@ -6,8 +6,9 @@
 #define BS 8
 #define L_Key 75
 #define R_Key 77
-int GetKey();
 
+
+int GetKey();
 int main()
 {
 	int pos=0;
